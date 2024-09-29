@@ -17,15 +17,6 @@ int PageReplacement::simulateFIFO(const std::vector<int>& pages, unsigned long n
 
     for (size_t i = 0; i < pages.size(); i++)
     {
-        
-        /* 
-        std::cout << "-----------------------------" << std::endl;
-        std::cout << "Number:" << pages[i] << std::endl;
-        for (size_t i = 0; i < frames.size(); i++)
-        {
-            std::cout << frames[i] << std::endl;
-        }
-         */
 
         // Verifica se a página já existe na memória
         if (std::find(frames.begin(), frames.end(), pages[i]) != frames.end())
@@ -48,11 +39,9 @@ int PageReplacement::simulateFIFO(const std::vector<int>& pages, unsigned long n
         frames.pop_front();
         frames.push_back(pages[i]);
         numReplaces++;
-        //std::cout << "=+1" << std::endl;
         
     }
 
-    //std::cout << "-----------------------------" << std::endl;
     return numReplaces;
     
 }
@@ -63,15 +52,6 @@ int PageReplacement::simulateOTM(const std::vector<int>& pages, unsigned long nu
 
     for (size_t i = 0; i < pages.size(); i++)
     {
-        
-/*         
-        std::cout << "-----------------------------" << std::endl;
-        std::cout << "Number:" << pages[i] << std::endl;
-        for (size_t i = 0; i < frames.size(); i++)
-        {
-            std::cout << frames[i] << std::endl;
-        }
-         */
 
         // Verifica se a página já existe na memória
         if (std::find(frames.begin(), frames.end(), pages[i]) != frames.end())
@@ -86,7 +66,6 @@ int PageReplacement::simulateOTM(const std::vector<int>& pages, unsigned long nu
             // Se sim, apenas adiciona a nova página
             frames.push_back(pages[i]);
             numReplaces++;
-            //std::cout << "=+1" << std::endl;
             continue;
         }
 
@@ -100,7 +79,6 @@ int PageReplacement::simulateOTM(const std::vector<int>& pages, unsigned long nu
             {
                 // Se sim, remove da lista temporária
                 temp.erase(std::remove(temp.begin(), temp.end(), pages[j]), temp.end());
-                //std::cout << "retira " << pages[j] << std::endl;
             }
 
             // Caso só tenha sobrado 1 elemento, ele é o que vai demorar mais para aparecer
@@ -110,17 +88,12 @@ int PageReplacement::simulateOTM(const std::vector<int>& pages, unsigned long nu
             }
             
         }
-
-        //std::cout << "sobra " << temp[0] << std::endl;
-
+        // Retira da memória a página que sobrou (no caso, a que demorará mais para ser usada)
         frames.erase(std::remove(frames.begin(), frames.end(), temp[0]), frames.end());
         frames.push_back(pages[i]);
         numReplaces++;
-        //std::cout << "=+1" << std::endl;
-        
     }
 
-    //std::cout << "-----------------------------" << std::endl;
     return numReplaces;
 }
 int PageReplacement::simulateLRU(const std::vector<int>& pages, unsigned long numFrames)
@@ -130,15 +103,6 @@ int PageReplacement::simulateLRU(const std::vector<int>& pages, unsigned long nu
 
     for (size_t i = 0; i < pages.size(); i++)
     {
-
-        /*         
-        std::cout << "-----------------------------" << std::endl;
-        std::cout << "Number:" << pages[i] << std::endl;
-        for (size_t i = 0; i < frames.size(); i++)
-        {
-            std::cout << frames[i] << std::endl;
-        }
-         */
 
         // Verifica se a página já existe na memória
         if (std::find(frames.begin(), frames.end(), pages[i]) != frames.end())
@@ -153,7 +117,6 @@ int PageReplacement::simulateLRU(const std::vector<int>& pages, unsigned long nu
             // Se sim, apenas adiciona a nova página
             frames.push_back(pages[i]);
             numReplaces++;
-            //std::cout << "=+1" << std::endl;
             continue;
         }
 
@@ -167,7 +130,6 @@ int PageReplacement::simulateLRU(const std::vector<int>& pages, unsigned long nu
             {
                 // Se sim, remove da lista temporária
                 temp.erase(std::remove(temp.begin(), temp.end(), pages[j]), temp.end());
-                //std::cout << "retira " << pages[j] << std::endl;
             }
 
             // Caso só tenha sobrado 1 elemento, ele é o que vai demorar mais para aparecer
@@ -178,15 +140,11 @@ int PageReplacement::simulateLRU(const std::vector<int>& pages, unsigned long nu
             
         }
 
-        //std::cout << "sobra " << temp[0] << std::endl;
-
+        // Retira da memória a página que sobrou (no caso, que foi usada a mais tempo)
         frames.erase(std::remove(frames.begin(), frames.end(), temp[0]), frames.end());
         frames.push_back(pages[i]);
         numReplaces++;
-        //std::cout << "=+1" << std::endl;
-        
     }
 
-    //std::cout << "-----------------------------" << std::endl;
     return numReplaces;
 }

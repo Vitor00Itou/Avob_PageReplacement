@@ -6,7 +6,6 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
-#include <iostream> ///////////////////////
 
 class PageReplacement
 {
